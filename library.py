@@ -1,70 +1,35 @@
-
-library = []
-
-def add_book():
-    book_id = input("Enter Book ID: ")
-    title = input("Enter Book Title: ")
-    author = input("Enter Author Name: ")
-    library.append({
-        "id": book_id,
-        "title": title,
-        "author": author,
-        "issued": False
-    })
-    print("Book added successfully!\n")
-
-def view_books():
-    if not library:
-        print("No books available.\n")
+def convert_temperature():
+    print("--- Universal Temperature Converter ---")
+    print("Choose the input unit:")
+    print("1. Celsius (C)")
+    print("2. Fahrenheit (F)")
+    print("3. Kelvin (K)")
+    
+    choice = input("Enter choice (1/2/3): ")
+    
+    try:
+        temp = float(input("Enter the temperature value: "))
+    except ValueError:
+        print("Invalid input! Please enter a numerical value.")
         return
 
-    print("\nAvailable Books:")
-    for book in library:
-        status = "Issued" if book["issued"] else "Available"
-        print(f"ID: {book['id']}, Title: {book['title']}, Author: {book['author']}, Status: {status}")
-    print()
+    if choice == '1': # Input is Celsius
+        f = (temp * 1.8) + 32
+        k = temp + 273.15
+        print(f"{temp}°C is equal to {f:.2f}°F and {k:.2f}K")
+        
+    elif choice == '2': # Input is Fahrenheit
+        c = (temp - 32) / 1.8
+        k = c + 273.15
+        print(f"{temp}°F is equal to {c:.2f}°C and {k:.2f}K")
+        
+    elif choice == '3': # Input is Kelvin
+        c = temp - 273.15
+        f = (c * 1.8) + 32
+        print(f"{temp}K is equal to {c:.2f}°C and {f:.2f}°F")
+        
+    else:
+        print("Invalid unit selection.")
 
-def issue_book():
-    book_id = input("Enter Book ID to issue: ")
-    for book in library:
-        if book["id"] == book_id and not book["issued"]:
-            book["issued"] = True
-            print("Book issued successfully!\n")
-            return
-    print("Book not found or already issued.\n")
-
-def return_book():
-    book_id = input("Enter Book ID to return: ")
-    for book in library:
-        if book["id"] == book_id and book["issued"]:
-            book["issued"] = False
-            print("Book returned successfully!\n")
-            return
-    print("Book not found or not issued.\n")
-
-def menu():
-    while True:
-        print("==== Library Management System ====")
-        print("1. Add Book")
-        print("2. View Books")
-        print("3. Issue Book")
-        print("4. Return Book")
-        print("5. Exit")
-
-        choice = input("Enter your choice: ")
-
-        if choice == "1":
-            add_book()
-        elif choice == "2":
-            view_books()
-        elif choice == "3":
-            issue_book()
-        elif choice == "4":
-            return_book()
-        elif choice == "5":
-            print("Thank you for using Library Management System.")
-            break
-        else:
-            print("Invalid choice. Try again.\n")
-
-menu()
+if __name__ == "__main__":
+    convert_temperature()
